@@ -20,8 +20,8 @@ Trait for Laravel Eloquent models to allow easy implementation of a "like" or "f
 
 ```php
 'providers' => [
-	\Fusion52\Likeable\FavoriteableServiceProvider::class,
-	\Fusion52\Likeable\FollowerableServiceProvider::class,
+	\Fusion52\Favoriteable\FavoriteableServiceProvider::class,
+	\Fusion52\Followerable\FollowerableServiceProvider::class,
 	\Fusion52\Likeable\LikeableServiceProvider::class,
 ],
 ```
