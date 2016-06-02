@@ -22,6 +22,8 @@
 	},
 	"autoload": {
 		"psr-4": {
+			"Fusion52\\Favoriteable\\": "src/",
+			"Fusion52\\Followerable\\": "src/",
 			"Fusion52\\Likeable\\": "src/"
 		}
 	},
