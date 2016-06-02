@@ -1,9 +1,9 @@
 <?php
 
-namespace Conner\Likeable;
+namespace Fusion52\Likeable;
 
 /**
- * Copyright (C) 2014 Robert Conner
+ * Copyright (C) 2016 Fusion52 Team
  */
 trait Likeable
 {
@@ -20,7 +20,7 @@ trait Likeable
 			});
 		}
 	}
-	
+
 	/**
 	 * Fetch records that are liked by a given user.
 	 * Ex: Book::whereLikedBy(123)->get();
@@ -30,13 +30,13 @@ trait Likeable
 		if(is_null($userId)) {
 			$userId = $this->loggedInUserId();
 		}
-		
+
 		return $query->whereHas('likes', function($q) use($userId) {
 			$q->where('user_id', '=', $userId);
 		});
 	}
-	
-	
+
+
 	/**
 	 * Populate the $model->likes attribute
 	 */
@@ -44,7 +44,7 @@ trait Likeable
 	{
 		return $this->likeCounter ? $this->likeCounter->count : 0;
 	}
-	
+
 	/**
 	 * Collection of the likes on this record
 	 */
@@ -61,7 +61,7 @@ trait Likeable
 	{
 		return $this->morphOne(LikeCounter::class, 'likeable');
 	}
-	
+
 	/**
 	 * Add a like for this record by the given user.
 	 * @param $userId mixed - If null will use currently logged in user.
@@ -71,14 +71,14 @@ trait Likeable
 		if(is_null($userId)) {
 			$userId = $this->loggedInUserId();
 		}
-		
+
 		if($userId) {
 			$like = $this->likes()
 				->where('user_id', '=', $userId)
 				->first();
-	
+
 			if($like) return;
-	
+
 			$like = new Like();
 			$like->user_id = $userId;
 			$this->likes()->save($like);
@@ -96,20 +96,20 @@ trait Likeable
 		if(is_null($userId)) {
 			$userId = $this->loggedInUserId();
 		}
-		
+
 		if($userId) {
 			$like = $this->likes()
 				->where('user_id', '=', $userId)
 				->first();
-	
+
 			if(!$like) { return; }
-	
+
 			$like->delete();
 		}
 
 		$this->decrementLikeCount();
 	}
-	
+
 	/**
 	 * Has the currently logged in user already "liked" the current object
 	 *
@@ -121,19 +121,19 @@ trait Likeable
 		if(is_null($userId)) {
 			$userId = $this->loggedInUserId();
 		}
-		
+
 		return (bool) $this->likes()
 			->where('user_id', '=', $userId)
 			->count();
 	}
-	
+
 	/**
 	 * Private. Increment the total like count stored in the counter
 	 */
 	private function incrementLikeCount()
 	{
 		$counter = $this->likeCounter()->first();
-		
+
 		if($counter) {
 			$counter->count++;
 			$counter->save();
@@ -143,7 +143,7 @@ trait Likeable
 			$this->likeCounter()->save($counter);
 		}
 	}
-	
+
 	/**
 	 * Private. Decrement the total like count stored in the counter
 	 */
@@ -160,7 +160,7 @@ trait Likeable
 			}
 		}
 	}
-	
+
 	/**
 	 * Fetch the primary ID of the currently logged in user
 	 * @return number
@@ -169,7 +169,7 @@ trait Likeable
 	{
 		return auth()->id();
 	}
-	
+
 	/**
 	 * Did the currently logged in user like this model
 	 * Example : if($book->liked) { }
@@ -179,7 +179,7 @@ trait Likeable
 	{
 		return $this->liked();
 	}
-	
+
 	/**
 	 * Should remove likes on model row delete (defaults to true)
 	 * public static removeLikesOnDelete = false;
@@ -190,14 +190,14 @@ trait Likeable
 			? static::$removeLikesOnDelete
 			: true;
 	}
-	
+
 	/**
 	 * Delete likes related to the current record
 	 */
 	public function removeLikes()
 	{
 		Like::where('likeable_type', $this->morphClass)->where('likeable_id', $this->id)->delete();
-		
+
 		LikeCounter::where('likeable_type', $this->morphClass)->where('likeable_id', $this->id)->delete();
 	}
 }

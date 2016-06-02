@@ -1,7 +1,7 @@
 <?php
 
 use Mockery as m;
-use Conner\Likeable\Likeable;
+use Fusion52\Likeable\Likeable;
 
 class CounterTest extends PHPUnit_Framework_TestCase
 {

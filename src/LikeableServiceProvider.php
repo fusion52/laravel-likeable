@@ -1,11 +1,11 @@
 <?php
 
-namespace Conner\Likeable;
+namespace Fusion52\Likeable;
 
 use Illuminate\Support\ServiceProvider;
 
 /**
- * Copyright (C) 2015 Robert Conner
+ * Copyright (C) 2015 Fusion52 Team
  */
 class LikeableServiceProvider extends ServiceProvider
 {
