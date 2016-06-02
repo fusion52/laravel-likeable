@@ -28,7 +28,7 @@ trait Followerable
 	public function scopeWhereFollowedBy($query, $userId=null)
 	{
 		if(is_null($userId)) {
-			$userId = $this->loggedInUserId();
+			$userId = $this->followerLoggedInUserId();
 		}
 
 		return $query->whereHas('followers', function($q) use($userId) {
@@ -69,7 +69,7 @@ trait Followerable
 	public function follower($userId=null)
 	{
 		if(is_null($userId)) {
-			$userId = $this->loggedInUserId();
+			$userId = $this->followerLoggedInUserId();
 		}
 
 		if($userId) {
@@ -94,7 +94,7 @@ trait Followerable
 	public function unfollower($userId=null)
 	{
 		if(is_null($userId)) {
-			$userId = $this->loggedInUserId();
+			$userId = $this->followerLoggedInUserId();
 		}
 
 		if($userId) {
@@ -119,7 +119,7 @@ trait Followerable
 	public function followed($userId=null)
 	{
 		if(is_null($userId)) {
-			$userId = $this->loggedInUserId();
+			$userId = $this->followerLoggedInUserId();
 		}
 
 		return (bool) $this->followers()
@@ -165,7 +165,7 @@ trait Followerable
 	 * Fetch the primary ID of the currently logged in user
 	 * @return number
 	 */
-	public function loggedInUserId()
+	public function followerLoggedInUserId()
 	{
 		return auth()->id();
 	}
