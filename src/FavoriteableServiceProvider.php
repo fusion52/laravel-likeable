@@ -12,7 +12,7 @@ class FavoriteableServiceProvider extends ServiceProvider
 	public function boot()
 	{
 		$this->publishes([
-			realpath(__DIR__.'/../migrations/2016_02_07_000000_create_favoriteable_tables.php') => database_path('migrations')
+			realpath(__DIR__.'/../migrations') => database_path('migrations')
 		], 'migrations');
 	}
 
